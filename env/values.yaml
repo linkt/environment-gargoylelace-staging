@@ -1,14 +1,31 @@
-expose:
-  Args: 
-    - --v
-    - 4
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-
+PipelineSecrets:
+  DockerConfig: '{"auths": {"docker-registry.default.svc:5000": {"auth": "c2VydmljZWFjY291bnQ6ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklpSjkuZXlKcGMzTWlPaUpyZFdKbGNtNWxkR1Z6TDNObGNuWnBZMlZoWTJOdmRXNTBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5dVlXMWxjM0JoWTJVaU9pSnFlQ0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVmpjbVYwTG01aGJXVWlPaUpxWlc1cmFXNXpMWGd0Y21WbmFYTjBjbmt0ZEc5clpXNHRNalZ3WTIwaUxDSnJkV0psY201bGRHVnpMbWx2TDNObGNuWnBZMlZoWTJOdmRXNTBMM05sY25acFkyVXRZV05qYjNWdWRDNXVZVzFsSWpvaWFtVnVhMmx1Y3kxNExYSmxaMmx6ZEhKNUlpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVkV2xrSWpvaVltVXdPVEpoWWpRdE9XVXdOeTB4TVdVNUxXSXdNVGd0WlRSaE9HSTJZMk0wTjJReUlpd2ljM1ZpSWpvaWMzbHpkR1Z0T25ObGNuWnBZMlZoWTJOdmRXNTBPbXA0T21wbGJtdHBibk10ZUMxeVpXZHBjM1J5ZVNKOS5icHFvMGgyTFdGdXlCekpxS24wQ2JBNVF5T1dVVDZTXzRlNWJxTDRzLWhRMWFVdjZkUDAxejNEeWlxNUZYVHJPa2ZwdjZ4RnhkOVBmd3Z6Q001Tmo0RE4wVk10Y29OM0NyZXJWbno2YklkVm9PZnE2emduUUFFS0xpeHpULWNyNFktbGowUWtEcXgwb3FFNHZvUFNQSWFiVGo2eGdVMzgtMWVIM3AxZmt6aXB6WVR3OFFpRGkwQXRnZndZZ0pjUE1GY2F0TWlIeWxZMjA3SkNEc3MxTDQ3NzRYZ1QyUERWd2NpX29CRzFlYm9rMXdDdkg1WGMyUDhZcjdRNHhNa2w2cTFIUzJydWljRGF6UnhsTDNGRmNFQTlWUlNHLWlxRDlWUUE1dUc4Q2J0cERGS1lPS3I1VHJudVhiaFlYT3Y3a1BQTEQxb3JPQnJIRkItTUJQdVlnbFE="}}}'
 cleanup:
-  Args: 
-    - --cleanup
   Annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --cleanup
+controllerbuild:
+  enabled: true
+controllerworkflow:
+  enabled: false
+dockerRegistry: docker-registry.default.svc:5000
+expose:
+  Annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --v
+  - 4
+  config:
+    domain: master.nip.io
+    exposer: Route
+    http: "true"
+jenkins:
+  Servers:
+    Global:
+      EnvVars:
+        TILLER_NAMESPACE: kube-system
+  enabled: false
+prow: {}
